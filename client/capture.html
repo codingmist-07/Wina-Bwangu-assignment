@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New transaction · Wina Bwangu agent console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="layout.css">
+<link rel="stylesheet" href="components.css">
+</head>
+<body data-page="capture">
+
+<div class="loading" hidden aria-hidden="true"></div>
+
+<div class="shell">
+
+  <header class="rail">
+    <div class="brand">
+      <a class="brand__name" href="index.html">Wina Bwangu</a>
+      <span class="brand__role">Agent console</span>
+    </div>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a class="nav-link" data-nav="dashboard" href="index.html">Dashboard</a>
+      <a class="nav-link" data-nav="capture" href="capture.html">New transaction</a>
+      <a class="nav-link" data-nav="register" href="transactions.html">Register<span class="nav-link__meta">308</span></a>
+      <a class="nav-link" data-nav="booths" href="booths.html">Booths<span class="nav-link__meta">6</span></a>
+    </nav>
+    <div class="rail__foot">
+      Client-side prototype<br>
+      Logbook Exercise 2
+    </div>
+  </header>
+
+  <main class="main">
+
+    <div class="page-head">
+      <div>
+        <h1>Record a transaction</h1>
+        <p class="lede">The reference is issued automatically. Pick the booth, and the location and the services it carries follow.</p>
+      </div>
+      <p class="page-head__period">Counter limits<br><span class="muted">K20 to K10,000 per transaction</span></p>
+    </div>
+
+    <div class="grid-capture">
+
+      <!-- the form -->
+      <section class="panel" aria-labelledby="form-title">
+        <div class="panel__head">
+          <h2 class="panel__title" id="form-title">Transaction details</h2>
+          <span class="panel__meta">All fields required</span>
+        </div>
+
+        <form id="capture-form" novalidate>
+
+          <div class="field" data-field="booth">
+            <label for="booth">Mobile booth</label>
+            <select id="booth" name="booth">
+              <option value="">Select a booth</option>
+            </select>
+            <p class="field__hint">Six booths across Lusaka District.</p>
+            <p class="field__error" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location" readonly tabindex="-1"
+                   placeholder="Follows the booth you choose">
+          </div>
+
+          <div class="field" data-field="service">
+            <label for="service">Service</label>
+            <select id="service" name="service" disabled>
+              <option value="">Select a booth first</option>
+            </select>
+            <p class="field__hint" id="service-hint">The list is restricted to services this booth carries.</p>
+            <p class="field__error" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="rate">Revenue per kwacha</label>
+            <input type="text" id="rate" name="rate" readonly tabindex="-1"
+                   placeholder="Set by the service">
+          </div>
+
+          <div class="field" data-field="amount">
+            <label for="amount">Transaction amount (K)</label>
+            <input type="number" id="amount" name="amount" min="20" max="10000" step="0.01"
+                   inputmode="decimal" placeholder="0.00" autocomplete="off">
+            <p class="field__hint">Checked against the credit left on the service before it is accepted.</p>
+            <p class="field__error" role="alert"></p>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn" type="submit" id="submit">Record transaction</button>
+            <button class="btn btn--quiet" type="button" id="clear-form">Clear</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- the live ticket -->
+      <aside>
+        <section class="ticket" aria-labelledby="ticket-title">
+          <div class="ticket__head">
+            <span class="ticket__idlabel" id="ticket-title">Transaction reference</span>
+            <div class="ticket__id" id="ticket-id">—</div>
+          </div>
+          <div class="ticket__body">
+            <div class="readout"><span class="readout__label">Booth</span><span class="readout__value" id="r-booth">—</span></div>
+            <div class="readout"><span class="readout__label">Service</span><span class="readout__value" id="r-service">—</span></div>
+            <div class="readout"><span class="readout__label">Amount</span><span class="readout__value" id="r-amount">—</span></div>
+            <div class="readout"><span class="readout__label">Commission earned</span><span class="readout__value" id="r-commission">—</span></div>
+            <div class="readout"><span class="readout__label">Tax at 16%</span><span class="readout__value" id="r-tax">—</span></div>
+            <div class="readout"><span class="readout__label">Revenue after tax</span><span class="readout__value" id="r-net">—</span></div>
+            <div class="readout readout--total"><span class="readout__label">Amount after tax</span><span class="readout__value" id="r-after">—</span></div>
+            <p class="float-note" id="float-note">Choose a booth, a service and an amount to price the transaction.</p>
+          </div>
+        </section>
+
+        <section class="panel receipt-list" aria-labelledby="log-title">
+          <div class="panel__head">
+            <h2 class="panel__title" id="log-title">Recorded this session</h2>
+            <span class="panel__meta" id="session-count">0 transactions</span>
+          </div>
+          <ul id="session-log">
+            <li id="session-empty" class="muted">Nothing recorded yet. Transactions you add appear here and in the register.</li>
+          </ul>
+        </section>
+      </aside>
+
+    </div>
+  </main>
+</div>
+
+<div class="toast-tray" aria-live="polite" aria-atomic="false"></div>
+
+<script src="auth.js"></script>
+<script src="data.js"></script>
+<script src="api.js"></script>
+<script src="store.js"></script>
+<script src="ui.js"></script>
+<script src="capture.js"></script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+/* ============================================================================
+   style.css — Login page
+
+   Extends base.css. Uses the same tokens (colours, spacing, radii) so the
+   login screen feels like part of the same app as the dashboard.
+   ========================================================================== */
+
+/* --- page shell ---------------------------------------------------------- */
+body {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: var(--s5);
+
+  /* subtle diagonal-line pattern on the paper background */
+  background-color: var(--paper);
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(14, 43, 38, 0.035) 0,
+    rgba(14, 43, 38, 0.035) 1px,
+    transparent 1px,
+    transparent 12px
+  );
+}
+
+/* --- the card ------------------------------------------------------------ */
+.container {
+  width: 100%;
+  max-width: 420px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: var(--s7) var(--s6) var(--s6);
+  box-shadow: 0 12px 40px rgba(14, 43, 38, 0.08);
+}
+
+/* --- branding ------------------------------------------------------------ */
+.wina-bwangu {
+  text-align: center;
+  margin-bottom: var(--s6);
+}
+
+.wina-bwangu h1 {
+  font-size: var(--t-xl);
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.wina-bwangu h2 {
+  font-size: var(--t-sm);
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-top: var(--s2);
+}
+
+/* --- form ---------------------------------------------------------------- */
+#loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s4);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: var(--s2);
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  font-size: var(--t-base);
+  color: var(--text);
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.form-group input::placeholder {
+  color: #9AADA7;
+}
+
+.form-group input:hover {
+  border-color: var(--ink-soft);
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px rgba(46, 111, 98, 0.15);
+}
+
+/* invalid state — applied via JS by adding .is-invalid to .form-group */
+.form-group.is-invalid input {
+  border-color: var(--danger);
+  box-shadow: inset 3px 0 0 var(--danger);
+}
+
+/* --- error messages ------------------------------------------------------ */
+.error-msg {
+  display: none;
+  font-size: var(--t-xs);
+  font-weight: 600;
+  color: var(--danger);
+  margin-top: var(--s2);
+}
+
+.form-group.is-invalid .error-msg {
+  display: block;
+}
+
+/* --- button -------------------------------------------------------------- */
+.auth-form button {
+  width: 100%;
+  padding: 12px 20px;
+  margin-top: var(--s2);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--ink);
+  color: #F2F7F5;
+  font-size: var(--t-base);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 120ms ease, transform 80ms ease;
+}
+
+.auth-form button:hover {
+  background: var(--ink-hi);
+}
+
+.auth-form button:active {
+  transform: translateY(1px);
+}
+
+.auth-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* --- login/register link -------------------------------------------------*/
+.login-link {
+  text-align: center;
+  margin-top:var(--s4);
+  font-size: var(--t-sm);
+  color:var(--muted);
+}
+
+.login-link a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-linkk a:hover {
+  text-decoration: underline;
+}
+/* --- feedback message ---------------------------------------------------- */
+#message {
+  display: none;
+  margin-top: var(--s4);
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  text-align: center;
+}
+
+#message.is-success {
+  display: block;
+  background: var(--ok-wash);
+  color: var(--ok);
+  border: 1px solid rgba(27, 107, 82, 0.25);
+}
+
+#message.is-error {
+  display: block;
+  background: var(--danger-wash);
+  color: var(--danger);
+  border: 1px solid rgba(166, 43, 31, 0.25);
+}
+
+/* --- small screens ------------------------------------------------------- */
+@media (max-width: 480px) {
+  body {
+    padding: var(--s4);
+  }
+
+  .container {
+    padding: var(--s6) var(--s5) var(--s5);
+  }
+
+  .wina-bwangu h1 {
+    font-size: var(--t-lg);
+  }
+}

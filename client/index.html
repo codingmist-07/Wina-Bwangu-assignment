@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard · Wina Bwangu agent console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="layout.css">
+<link rel="stylesheet" href="components.css">
+</head>
+<body data-page="dashboard">
+
+<div class="loading" hidden aria-hidden="true"></div>
+
+<div class="shell">
+
+  <!-- navigation rail — shared by all four pages -->
+  <header class="rail">
+    <div class="brand">
+      <a class="brand__name" href="index.html">Wina Bwangu</a>
+      <span class="brand__role">Agent console</span>
+    </div>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a class="nav-link" data-nav="dashboard" href="index.html">Dashboard</a>
+      <a class="nav-link" data-nav="capture" href="capture.html">New transaction</a>
+      <a class="nav-link" data-nav="register" href="transactions.html">Register<span class="nav-link__meta">308</span></a>
+      <a class="nav-link" data-nav="booths" href="booths.html">Booths<span class="nav-link__meta">6</span></a>
+      <div class="rail_logout">
+        <button type="button" id="logoutBtn">Log out</button>
+      </div>
+    </nav>
+    <div class="rail__foot">
+      Client-side prototype<br>
+      Logbook Exercise 2
+    </div>
+  </header>
+
+  <main class="main">
+
+    <div class="page-head">
+      <div>
+        <h1>Float, revenue and tax at a glance</h1>
+        <p class="lede">Six booths, five services, one monthly credit limit per service. Everything below is computed from the transaction register.</p>
+      </div>
+      <p class="page-head__period">February 2021<br><span class="muted">Closed period</span></p>
+    </div>
+
+    <!-- the hero: how much credit each service has left this month -->
+    <section class="board" aria-labelledby="board-title">
+      <div class="board__head">
+        <div>
+          <h2 class="board__title" id="board-title">Credit remaining this month</h2>
+          <p class="board__note">The bar shows how much of the monthly limit is already spent. An agent checks this before accepting a large transaction.</p>
+        </div>
+      </div>
+      <div class="gauges" id="board-gauges"></div>
+    </section>
+
+    <section class="section" aria-labelledby="totals-title">
+      <div class="section__head">
+        <h2 id="totals-title">Company summary</h2>
+        <p class="section__note">Commission is charged per kwacha transacted. VAT of 16% is applied to that commission.</p>
+      </div>
+      <div class="grid-3">
+        <div class="stat">
+          <p class="stat__label">Total revenue</p>
+          <p class="stat__value" id="total-revenue">—</p>
+          <p class="stat__note" id="total-revenue-note">—</p>
+        </div>
+        <div class="stat stat--capital">
+          <p class="stat__label">Total capital required</p>
+          <p class="stat__value" id="total-capital">—</p>
+          <p class="stat__note">Credit the booths must hold to clear a month at this volume</p>
+        </div>
+        <div class="stat stat--tax">
+          <p class="stat__label">Tax on commission</p>
+          <p class="stat__value" id="total-tax">—</p>
+          <p class="stat__note">Leaving <span id="total-net">—</span> revenue after tax</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="mix-title">
+      <div class="section__head">
+        <h2 id="mix-title">Where the money comes from</h2>
+        <div class="pie-toggle">
+          <button class="btn" type="button" data-mode="revenue" aria-pressed="true">Revenue</button>
+          <button class="btn btn--quiet" type="button" data-mode="capital" aria-pressed="false">Capital</button>
+        </div>
+      </div>
+      <div class="grid-split">
+        <div class="panel">
+          <div id="pie"></div>
+          <p class="panel__meta" id="pie-caption" style="margin-top:var(--s4)">—</p>
+        </div>
+        <div class="panel panel--flush">
+          <div class="panel__head">
+            <h3 class="panel__title">Service limits and headroom</h3>
+            <span class="panel__meta"><span id="count-transactions">—</span> transactions</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <caption class="sr-only">Monthly limit, amount used, headroom and revenue for each service</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Service</th>
+                  <th scope="col" class="num">Monthly limit</th>
+                  <th scope="col" class="num">Cumulative total</th>
+                  <th scope="col">Used</th>
+                  <th scope="col" class="num">Remaining</th>
+                  <th scope="col" class="num">Count</th>
+                  <th scope="col" class="num">Revenue</th>
+                </tr>
+              </thead>
+              <tbody id="service-rows"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="booth-title">
+      <div class="section__head">
+        <h2 id="booth-title">Booth performance</h2>
+        <p class="section__note">Cumulative revenue per booth, with the tax obligation each one generates.</p>
+      </div>
+      <div class="panel panel--flush">
+        <div class="table-wrap">
+          <table>
+            <caption class="sr-only">Transactions, capital, revenue and tax by mobile booth</caption>
+            <thead>
+              <tr>
+                <th scope="col">Booth</th>
+                <th scope="col">Location</th>
+                <th scope="col" class="num">Transactions</th>
+                <th scope="col" class="num">Capital</th>
+                <th scope="col">Cumulative revenue</th>
+                <th scope="col">Tax obligation</th>
+                <th scope="col">Busiest service</th>
+              </tr>
+            </thead>
+            <tbody id="booth-rows"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="matrix-title">
+      <div class="section__head">
+        <h2 id="matrix-title">How often each service sells, booth by booth</h2>
+        <p class="section__note">Deeper colour means more transactions. Blank cells are services the booth does not carry.</p>
+      </div>
+      <div class="panel panel--flush">
+        <div class="table-wrap">
+          <table class="matrix">
+            <caption class="sr-only">Transaction frequency for each service at each booth</caption>
+            <thead><tr id="matrix-head"></tr></thead>
+            <tbody id="matrix-rows"></tbody>
+          </table>
+        </div>
+        <p class="panel__meta" id="matrix-note" style="padding:var(--s4) var(--s5) 0">—</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="toast-tray" aria-live="polite" aria-atomic="false"></div>
+
+<script src="auth.js"></script>
+<script src="data.js"></script>
+<script src="api.js"></script>
+<script src="store.js"></script>
+<script src="ui.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>

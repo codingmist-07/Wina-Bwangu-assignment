@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login · Wina Bwangu agent console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+
+  <div class="container">
+    <!-- Wina Bwangu Branding -->
+    <div class="wina-bwangu">
+      <h1>Wina Bwangu</h1>
+      <h2>Mobile Money Management System</h2>
+    </div>
+
+    <form id="loginForm" class="auth-form" autocomplete="off" novalidate>
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" autocomplete="off" placeholder="Enter your username">
+        <small class="error-msg" id="usernameError"></small>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" autocomplete="new-password">
+        <small class="error-msg" id="passwordError"></small>
+      </div>
+
+      <button type="submit">Login</button>
+    </form>
+
+    <p class="login-link">
+      Don't have an account? <a href="register.html"> Create one</a>
+    </p>
+
+    <div id="message"></div>
+  </div>
+
+  <script src="login.js"></script>
+</body>
+</html>

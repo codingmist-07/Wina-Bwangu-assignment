@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Register · Wina Bwangu agent console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="layout.css">
+<link rel="stylesheet" href="components.css">
+</head>
+<body data-page="register">
+
+<div class="loading" hidden aria-hidden="true"></div>
+
+<div class="shell">
+
+  <header class="rail">
+    <div class="brand">
+      <a class="brand__name" href="index.html">Wina Bwangu</a>
+      <span class="brand__role">Agent console</span>
+    </div>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a class="nav-link" data-nav="dashboard" href="index.html">Dashboard</a>
+      <a class="nav-link" data-nav="capture" href="capture.html">New transaction</a>
+      <a class="nav-link" data-nav="register" href="transactions.html">Register<span class="nav-link__meta">308</span></a>
+      <a class="nav-link" data-nav="booths" href="booths.html">Booths<span class="nav-link__meta">6</span></a>
+    </nav>
+    <div class="rail__foot">
+      Client-side prototype<br>
+      Logbook Exercise 2
+    </div>
+  </header>
+
+  <main class="main">
+
+    <div class="page-head">
+      <div>
+        <h1>Transaction register</h1>
+        <p class="lede">Every transaction for the period, priced line by line. Filter to a booth or a service to see the totals for that slice only.</p>
+      </div>
+      <p class="page-head__period">February 2021<br><span class="muted">Appendix 1</span></p>
+    </div>
+
+    <section class="section" style="margin-top:0" aria-labelledby="filters-title">
+      <h2 class="sr-only" id="filters-title">Filter the register</h2>
+      <div class="filters">
+        <div class="field field--search">
+          <label for="f-search">Search</label>
+          <input type="search" id="f-search" placeholder="Reference, booth or location" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="f-booth">Booth</label>
+          <select id="f-booth"><option value="">All booths</option></select>
+        </div>
+        <div class="field">
+          <label for="f-service">Service</label>
+          <select id="f-service"><option value="">All services</option></select>
+        </div>
+        <div class="field">
+          <label for="f-sort">Sort by</label>
+          <select id="f-sort">
+            <option value="id-asc">Reference, oldest first</option>
+            <option value="id-desc">Reference, newest first</option>
+            <option value="amount-desc">Amount, highest first</option>
+            <option value="amount-asc">Amount, lowest first</option>
+            <option value="revenue-desc">Revenue, highest first</option>
+            <option value="booth">Booth</option>
+          </select>
+        </div>
+        <button class="btn btn--quiet" type="button" id="f-reset">Clear filters</button>
+      </div>
+
+      <div class="grid-3" style="margin-bottom:var(--s5)">
+        <div class="stat">
+          <p class="stat__label">Transactions shown</p>
+          <p class="stat__value" id="sum-count">—</p>
+        </div>
+        <div class="stat stat--capital">
+          <p class="stat__label">Value transacted</p>
+          <p class="stat__value" id="sum-amount">—</p>
+        </div>
+        <div class="stat stat--tax">
+          <p class="stat__label">Revenue / tax</p>
+          <p class="stat__value" id="sum-revenue">—</p>
+          <p class="stat__note">Tax of <span id="sum-tax">—</span> on that revenue</p>
+        </div>
+      </div>
+
+      <div class="panel panel--flush">
+        <div class="table-wrap">
+          <table>
+            <caption class="sr-only">Transactions with commission, tax and amount after tax</caption>
+            <thead>
+              <tr>
+                <th scope="col">Reference</th>
+                <th scope="col">Booth</th>
+                <th scope="col">Location</th>
+                <th scope="col">Service</th>
+                <th scope="col" class="num">Rate</th>
+                <th scope="col" class="num">Amount</th>
+                <th scope="col" class="num">Commission</th>
+                <th scope="col" class="num">Tax</th>
+                <th scope="col" class="num">Amount after tax</th>
+              </tr>
+            </thead>
+            <tbody id="register-rows"></tbody>
+          </table>
+        </div>
+        <div class="pager" style="padding-left:var(--s5);padding-right:var(--s5)">
+          <span id="pager-status">—</span>
+          <span class="pager__buttons">
+            <button class="btn btn--quiet" type="button" id="prev">Previous</button>
+            <button class="btn btn--quiet" type="button" id="next">Next</button>
+          </span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="toast-tray" aria-live="polite" aria-atomic="false"></div>
+
+<script src="auth.js"></script>
+<script src="data.js"></script>
+<script src="api.js"></script>
+<script src="store.js"></script>
+<script src="ui.js"></script>
+<script src="transactions.js"></script>
+</body>
+</html>
