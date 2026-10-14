@@ -58,7 +58,7 @@ CREATE TABLE transactions (
 -- Seed: users
 -- ---------------------------------------------------------------------
 INSERT INTO users(username, password_hash, role) VALUES('Wina', 'WinaBwangu', 'agent');
-INSERT INTO users(username, password_hash, role) VALUES('Choolwe', 'sep2407', 'admin');
+INSERT INTO users(username, password_hash, role) VALUES('Group16', 'Wina1234', 'admin');
 
 -- ---------------------------------------------------------------------
 -- Seed: booths
